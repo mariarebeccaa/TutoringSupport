@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <div class="sidebar-header">
+                <img src="assets/tutoring-logo-white.png" alt="Logo">
+                <h2>Tutoring Support</h2>
+            </div>
+
+            <a class="active" href="#" data-section="home">Home</a>
+            <a href="#" data-section="groups">Groups</a>
+            <a href="#" data-section="participants">Participants</a>
+
+        </div>
+
+        <div class="main">
+            <!-- Header alb -->
+            <div class="navbar">
+                <button id="menu-toggle" class="menu-toggle">&#9776;</button>
+                <div class="user-info">
+                    <span>Edu Maria-Rebecca</span>
+                    <img src="assets/user.jpg" class="avatar">
+                </div>
+            </div>
+
+            <!-- Conținut -->
+            <div class="content">
+
+                <!-- Secțiunea Home -->
+                <section id="home" class="section active">
+                    <h2>Home</h2>
+                </section>
+
+                <!-- Secțiunea Groups -->
+                <section id="groups" class="section">
+                    <div class="content-header">
+                        <h2>Groups</h2>
+                        <button id="addGroupBtn" class="btn-primary">Add new group</button>
+                    </div>
+
+                    <!-- containerul gol, aici JS va insera cardurile -->
+                    <div class="groups"></div>
+                </section>
+
+
+                <!-- Secțiunea Participants -->
+                <section id="participants" class="section">
+                    <div class="content-header">
+                        <h2>Participants</h2>
+                        <button id="addParticipantBtn" class="btn-primary">Add a participant</button>
+                    </div>
+
+                    <div class="participants-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Participant</th>
+                                    <th>E-mail</th>
+                                    <th>Grade</th>
+                                    <th>Classes</th>
+                                    <th>Status</th>
+                                    <th>Invited</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="participantsBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pentru adăugare grup -->
+    <div id="addGroupModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Add a new group</h2>
+            <form id="addGroupForm">
+                <label>Group name and class:</label>
+                <input type="text" id="groupName" required>
+                <label>Date and hour:</label>
+                <input type="text" id="groupDesc" required>
+                <label>Students:</label>
+                <input type="text" id="groupStudents" required>
+                <label>Image URL:</label>
+                <input type="text" id="groupImg" required>
+                <button type="submit" class="btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pentru Add/Edit Participant -->
+    <div id="participantModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" id="closeParticipantModal">&times;</span>
+            <h2 id="participantModalTitle">Add participant</h2>
+            <form id="participantForm">
+                <label>First name</label>
+                <input type="text" id="pFirst" required>
+                <label>Last name</label>
+                <input type="text" id="pLast" required>
+                <label>E-mail</label>
+                <input type="email" id="pEmail" required>
+                <label>Grade</label>
+                <input type="text" id="pClass" placeholder="e.g. 9A">
+                <label>Classes (comma separated)</label>
+                <input type="text" id="pSubjects" placeholder="Mate, Fizica">
+                <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+                    <button type="submit" class="btn-primary" id="participantSubmit">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

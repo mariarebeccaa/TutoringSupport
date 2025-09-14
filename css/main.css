@@ -1,0 +1,1407 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #F0F2F7;
+}
+
+.sidebar {
+    position: fixed;
+    /* nu mai e fixat pe ecran */
+    top: 0;
+    left: 0;
+    width: 253px;
+    height: 100vh;
+    /* se întinde cât conținutul */
+    background-color: #0F2B4E;
+    color: white;
+    transition: left 0.3s, width 0.3s;
+}
+
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+/* Header-ul din sidebar (Rectangle 4) */
+.sidebar-header {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    justify-content: flex-start;
+    /* aliniere la stânga */
+    min-width: 0;
+    /* permite shrink */
+    overflow: hidden;
+    /* ascunde overflow */
+    gap: 8px;
+}
+
+.sidebar-header img {
+    height: 55px;
+    width: 55px;
+    min-width: 0;
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 8px;
+
+}
+
+
+.sidebar-header h2 {
+    font-size: 18px;
+    color: white;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex-shrink: 1;
+    text-align: left;
+    /* textul la stânga */
+}
+
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+
+}
+
+/* Active/current link */
+.sidebar a.active {
+    background-color: #285B9A;
+    color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+    background-color: #285B9A;
+    color: white;
+}
+
+.sidebar a,
+.sidebar a.active {
+    border-radius: 0;
+}
+
+/* Zona principală (dreapta) */
+.main {
+    margin-left: 253px;
+    /* împinge contentul la dreapta, cât sidebar-ul */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    transition: margin-left 0.3s;
+}
+
+/* Navbar above page content so hamburger is always clicabil */
+.navbar {
+    position: fixed;
+    left: 253px;
+    right: 0;
+    top: 0;
+    height: 60px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    box-shadow: 0px 2px 2px 0px #00000012;
+    z-index: 9999;
+    /* <-- increased so it's above participants/table */
+    transition: left 0.3s;
+}
+
+/* Mobile: keep sidebar under navbar so hamburger remains clickable */
+@media (max-width: 600px) {
+    .sidebar {
+        position: fixed;
+        width: 180px;
+        min-width: 60px;
+        left: -180px;
+        top: 0;
+        height: 100%;
+        transition: left 0.3s;
+        z-index: 200;
+        /* sidebar below navbar */
+        padding: 0;
+    }
+
+    /* navbar should stay above sidebar on mobile too */
+    .navbar {
+        left: 0;
+        z-index: 300;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .main {
+        padding-top: 60px;
+        /* height of .navbar */
+    }
+
+    /* reduce spacing between navbar and section titles */
+    .content h2 {
+        margin: 18px 12px;
+        /* mai aproape de navbar */
+        font-size: 17px;
+    }
+
+    .content h3 {
+        margin-top: 6px;
+        font-size: 14px;
+    }
+
+    /* compactează header-ul secțiunilor (titlu + buton) */
+    .content-header {
+        margin-bottom: 10px;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .content-header button {
+        margin-top: 0;
+        /* nu mai împinge în jos */
+    }
+
+    /* mai puțin padding lateral pentru grid-uri și tabele pe mobil */
+    .groups {
+        padding-left: 8px;
+        padding-right: 8px;
+        gap: 12px;
+    }
+
+    .participants-table {
+        padding: 8px;
+    }
+
+    .participants-table th,
+    .participants-table td {
+        padding: 8px 10px;
+    }
+
+    /* păstrează conținutul sub navbar dar fără spații mari în interior */
+    .main {
+        padding-top: 60px;
+        /* keep navbar offset */
+        box-sizing: border-box;
+    }
+
+    /* keep sidebar typography same as desktop on small screens */
+    .sidebar a {
+        font-size: 16px !important;
+        font-weight: 500;
+        line-height: 1.2;
+        padding: 10px 12px;
+        /* ajustează spațierea dacă e nevoie */
+    }
+
+    .sidebar-header h2 {
+        font-size: 18px !important;
+        line-height: 1;
+    }
+}
+
+.content h2 {
+    margin: 65px 20px;
+    font-size: 19px;
+    color: #0F2B4E;
+}
+
+.content h3 {
+    align-items: center;
+    font-size: 15px;
+    color: #0F2B4E;
+}
+
+/* Ascunde secțiunile implicit */
+.section {
+    display: none;
+}
+
+/* Doar secțiunea activă este vizibilă */
+.section.active {
+    display: block;
+}
+
+/* Programs – carduri */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.content-header button {
+    margin-top: 18px;
+}
+
+/* Primary (call-to-action) */
+.btn-primary {
+    background: linear-gradient(180deg, #4fa3ff 0%, #2b6fe6 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(43, 111, 230, 0.14);
+    font-weight: 600;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(43, 111, 230, 0.18);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Invite button: inactive / invited (blue variant of status-btn) */
+.invite-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background .12s, color .12s, border-color .12s, box-shadow .12s;
+    background: #fff;
+    color: #1f6fd1;
+    border: 1px solid #cfe3ff;
+    /* subtle blue outline when not invited */
+    box-shadow: none;
+}
+
+.invite-btn:hover {
+    background: #f3f9ff;
+}
+
+/* invited = filled blue state (analogous to status-btn.active) */
+.invite-btn.invited {
+    background: linear-gradient(180deg, #66a8ff 0%, #2b73e6 100%);
+    color: #ffffff;
+    border-color: rgba(43, 115, 230, 0.9);
+    box-shadow: 0 6px 14px rgba(43, 115, 230, 0.12);
+}
+
+/* focus / active states for accessibility */
+.invite-btn:focus {
+    outline: 2px solid rgba(43, 115, 230, 0.18);
+    outline-offset: 2px;
+}
+
+/* Programs – carduri */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.content-header button {
+    margin-top: 18px;
+}
+
+/* Primary (call-to-action) */
+.btn-primary {
+    background: linear-gradient(180deg, #4fa3ff 0%, #2b6fe6 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(43, 111, 230, 0.14);
+    font-weight: 600;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(43, 111, 230, 0.18);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Invite button: inactive / invited (blue variant of status-btn) */
+.invite-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background .12s, color .12s, border-color .12s, box-shadow .12s;
+    background: #fff;
+    color: #1f6fd1;
+    border: 1px solid #cfe3ff;
+    /* subtle blue outline when not invited */
+    box-shadow: none;
+}
+
+.invite-btn:hover {
+    background: #f3f9ff;
+}
+
+/* invited = filled blue state (analogous to status-btn.active) */
+.invite-btn.invited {
+    background: linear-gradient(180deg, #66a8ff 0%, #2b73e6 100%);
+    color: #ffffff;
+    border-color: rgba(43, 115, 230, 0.9);
+    box-shadow: 0 6px 14px rgba(43, 115, 230, 0.12);
+}
+
+/* focus / active states for accessibility */
+.invite-btn:focus {
+    outline: 2px solid rgba(43, 115, 230, 0.18);
+    outline-offset: 2px;
+}
+
+.groups {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem 1rem 3rem 1rem;
+    /* mai mult spațiu jos pentru buton */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 250px;
+    position: relative;
+    /* necesar pentru poziționarea absolută a .card-actions */
+}
+
+.card-image {
+    background: #d9d9d9;
+    height: 150px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* culoare pentru descriere (ex: Thursday, 6:00 PM) */
+.card p:first-of-type {
+    color: #768392;
+    font-size: 12px;
+    margin-bottom: 4px;
+    text-align: right;
+}
+
+.card p:last-of-type {
+    color: #768392;
+    /* culoare pentru nr. de studenți */
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 0;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    /* împinge spre dreapta */
+}
+
+.user-info span {
+    font-weight: bold;
+    font-size: small;
+    color: #687078;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    margin-right: 1.5rem;
+    margin-left: 0;
+    cursor: pointer;
+    color: #0F2B4E;
+    height: 100%;
+}
+
+/* Responsive design pentru ecrane mici */
+@media (max-width: 900px) {
+    .groups {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .main {
+        margin-left: 180px;
+    }
+
+    .navbar {
+        left: 180px;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        position: fixed;
+        width: 180px;
+        min-width: 60px;
+        left: -180px;
+        top: 0;
+        height: 100%;
+        transition: left 0.3s;
+        z-index: 200;
+        /* sidebar below navbar */
+        padding: 0;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar .sidebar-header img,
+    .sidebar .sidebar-header h2,
+    .sidebar a {
+        display: block;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .navbar {
+        left: 0;
+        z-index: 300;
+    }
+
+    .menu-toggle {
+        display: flex;
+        /* vizibil mereu */
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        margin-right: 1.5rem;
+        margin-left: 0;
+        /* împinge spre dreapta */
+        cursor: pointer;
+        color: #0F2B4E;
+        height: 100%;
+    }
+
+    .sidebar-header {
+        height: 60px;
+        gap: 6px;
+        padding: 8px 0 8px 12px;
+    }
+
+    .sidebar-header img {
+        height: 32px;
+        width: 32px;
+        margin-right: 6px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 13px;
+        padding-bottom: 4px;
+    }
+
+    .sidebar a {
+        font-size: 11px;
+        /* mai mic decât titlul */
+        padding: 8px 10px;
+    }
+
+    /* reduce spacing between navbar and section titles */
+    .content h2 {
+        margin: 18px 12px;
+        /* mai aproape de navbar */
+        font-size: 17px;
+    }
+
+    .content h3 {
+        margin-top: 6px;
+        font-size: 14px;
+    }
+
+    /* compactează header-ul secțiunilor (titlu + buton) */
+    .content-header {
+        margin-bottom: 10px;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .content-header button {
+        margin-top: 0;
+        /* nu mai împinge în jos */
+    }
+
+    /* mai puțin padding lateral pentru grid-uri și tabele pe mobil */
+    .groups {
+        padding-left: 8px;
+        padding-right: 8px;
+        gap: 12px;
+    }
+
+    .participants-table {
+        padding: 8px;
+    }
+
+    .participants-table th,
+    .participants-table td {
+        padding: 8px 10px;
+    }
+
+    /* păstrează conținutul sub navbar dar fără spații mari în interior */
+    .main {
+        padding-top: 60px;
+        /* keep navbar offset */
+        box-sizing: border-box;
+    }
+
+    /* keep sidebar typography same as desktop on small screens */
+    .sidebar a {
+        font-size: 16px !important;
+        font-weight: 500;
+        line-height: 1.2;
+        padding: 10px 12px;
+        /* ajustează spațierea dacă e nevoie */
+    }
+
+    .sidebar-header h2 {
+        font-size: 18px !important;
+        line-height: 1;
+    }
+}
+
+/* aici am facut modificari adica  */
+@media (min-width: 601px) {
+    .sidebar {
+        left: 0;
+        width: 253px;
+    }
+
+    .sidebar.closed {
+        left: -253px;
+    }
+
+    .main {
+        margin-left: 253px;
+    }
+
+    .main.shifted {
+        margin-left: 0;
+    }
+
+
+    .navbar {
+        left: 253px;
+    }
+
+    .navbar.shifted {
+        left: 0;
+    }
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow: auto;
+
+    /* modern blur (suportat în browsere moderne) */
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+/* Fallback: dacă browserul nu suportă backdrop-filter, aplicăm blur direct pe conținutul paginii */
+.modal-open .container,
+.modal-open .navbar,
+.modal-open .sidebar {
+    /* blur mai subtil, asta nu afectează modalul deoarece modalul e în afara .container */
+    filter: blur(6px);
+    pointer-events: none;
+    /* previne interacțiuni cu fundalul când modalul e deschis */
+}
+
+/* când modalul e deschis vrem ca modalul în sine să poată primi pointer-events */
+.modal-open #addGroupModal {
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    min-width: 300px;
+    position: relative;
+}
+
+/* Stil modern pentru modalul Add a new group */
+#addGroupModal .modal-content {
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    /* padding echilibrat stânga/dreapta și box-sizing ca să nu „împingă” conținutul */
+    padding: 18px 24px;
+    box-shadow: 0 8px 24px rgba(60, 60, 60, 0.12);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-height: calc(100vh - 32px);
+    overflow: visible;
+    box-sizing: border-box;
+    /* IMPORTANT: face paddingul parte din calculul lățimii */
+}
+
+
+#addGroupModal h2 {
+    font-size: 1.5rem;
+    /* mai mic */
+    font-weight: 700;
+    color: #183153;
+    margin: 0 0 8px 0;
+}
+
+#addGroupForm label {
+    font-weight: 600;
+    color: #183153;
+    margin-bottom: 6px;
+    display: block;
+    font-size: 0.95rem;
+}
+
+/* formularul ocupă 100% din modal, fără margină laterală */
+#addGroupForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: visible;
+    max-height: none;
+    padding: 0;
+    margin: 0;
+    /* elimin orice deplasare */
+    width: 100%;
+    /* ocupă tot spațiul intern al modal-content */
+    box-sizing: border-box;
+}
+
+/* asigură că inputurile respectă padding-ul și nu „depășesc” */
+#addGroupForm input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    /* IMPORTANT */
+    padding: 10px 12px;
+    border: 1px solid #dbe2ea;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    background: #f7f9fb;
+    transition: border 0.15s;
+}
+
+#addGroupForm input[type="text"]:focus {
+    border: 1.5px solid #285B9A;
+    outline: none;
+    background: #fff;
+}
+
+/* butonul rămâne la dreapta dar în flux */
+#addGroupForm button.btn-primary {
+    position: static;
+    align-self: flex-end;
+    margin-top: 8px;
+    background: #3973f4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 18px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(60, 60, 60, 0.07);
+    transition: background 0.18s;
+}
+
+#addGroupForm button.btn-primary:hover {
+    background: #285B9A;
+}
+
+#addGroupModal .close {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    font-size: 2rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#addGroupModal .close:hover {
+    color: #3973f4;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    #addGroupModal .modal-content {
+        padding: 20px;
+        max-width: 98vw;
+    }
+
+    #addGroupForm {
+        max-height: calc(100vh - 180px);
+    }
+
+    #addGroupForm button.btn-primary {
+        align-self: flex-end;
+        padding: 10px 28px;
+    }
+}
+
+/* card actions — moved to bottom-right and styled icon buttons */
+.card .card-actions {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 8;
+}
+
+/* base icon button */
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgba(16, 24, 40, 0.06);
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    padding: 6px;
+    color: #0F2B4E;
+}
+
+/* small icon buttons used in table rows */
+.icon-btn.table-icon {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid transparent;
+}
+
+/* edit (blue) and delete (red) variants */
+.icon-btn.table-icon.edit-btn {
+    color: #1f6fd1;
+}
+
+.icon-btn.table-icon.edit-btn:hover {
+    background: #f3f9ff;
+    transform: translateY(-1px);
+}
+
+.icon-btn.table-icon.delete-btn {
+    color: #c92a2a;
+}
+
+.icon-btn.table-icon.delete-btn:hover {
+    background: #fff5f6;
+    transform: translateY(-1px);
+}
+
+/* New variant for circular delete button */
+.icon-btn.delete-btn.alt {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ff6b6b 0%, #e63946 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 8px 20px rgba(230, 60, 70, 0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
+}
+
+/* hover / focus */
+.icon-btn.delete-btn.alt:hover,
+.icon-btn.delete-btn.alt:focus {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(230, 60, 70, 0.18);
+    outline: none;
+}
+
+/* smaller variant for cards already using .icon-btn (keeps proportions) */
+.card .icon-btn.delete-btn.alt {
+    width: 44px;
+    height: 44px;
+}
+
+/* ensure SVG uses currentColor and trash lines are white on circle */
+.icon-btn.delete-btn.alt svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+}
+
+/* make inner vertical lines (the two lines) white for contrast */
+.icon-btn.delete-btn.alt svg path[stroke="#fff"] {
+    stroke: #fff;
+}
+
+/* optional subtle active state */
+.icon-btn.delete-btn.alt:active {
+    transform: translateY(-1px) scale(.99);
+    opacity: .98;
+}
+
+/* remove border fallback from previous rules for this variant */
+.icon-btn.delete-btn.alt {
+    border: none;
+}
+
+/* actions cell: align icons to right and center vertically */
+.actions-td {
+    position: relative;
+    z-index: 40;
+    text-align: right;
+    vertical-align: middle;
+}
+
+/* spacing between icons in table */
+.actions-td .icon-btn {
+    margin-left: 6px;
+}
+
+/* ensure SVG uses currentColor */
+.icon-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* edit button color */
+.icon-btn.edit-btn {
+    color: #1f6fd1;
+}
+
+.icon-btn.edit-btn:hover {
+    background: #f3f9ff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(31, 111, 209, 0.08);
+}
+
+/* delete button color */
+.icon-btn.delete-btn {
+    color: #c92a2a;
+}
+
+.icon-btn.delete-btn:hover {
+    background: #fff5f6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(201, 42, 42, 0.06);
+}
+
+/* svg inherit currentColor */
+.icon-btn svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ensure card has room at bottom so icons don't overlap content */
+.card {
+    padding-bottom: 3.25rem;
+}
+
+/* remove old dropdown menu styles if not used (keeps them harmless) */
+.options-menu {
+    display: none !important;
+}
+
+.participants-table {
+    padding: 0 16px 24px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.participants-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(16, 24, 40, 0.04);
+    min-width: 700px;
+    /* adjust value if you need more/less horizontal scroll */
+}
+
+.participants-table thead {
+    background: #f5f7fb;
+}
+
+.participants-table th,
+.participants-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.p-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.p-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #d9d9d9;
+    color: #0F2B4E;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.sub-badge {
+    display: inline-block;
+    background: #eef8ff;
+    color: #2256a8;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    margin-right: 6px;
+}
+
+.status-badge {
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+}
+
+.status-badge.active {
+    background: #e8fff3;
+    color: #028a4b;
+    border: 1px solid #c9f0d9;
+}
+
+.status-badge.inactive {
+    background: #f3f6f8;
+    color: #7a8793;
+    border: 1px solid #e6eef3;
+}
+
+.invite-btn {
+    background: #fff;
+    border: 1px solid #dbe7ff;
+    color: #2256a8;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.invite-btn:hover {
+    background: #f3f7ff;
+}
+
+/* Make Invite button use same Active/Inactive visuals as status-btn */
+.invite-btn.active {
+    background: #e8fff3;
+    color: #028a4b;
+    border: 1px solid #c9f0d9;
+    box-shadow: none;
+}
+
+.invite-btn.inactive {
+    background: #f3f6f8;
+    color: #7a8793;
+    border: 1px solid #e6eef3;
+    box-shadow: none;
+}
+
+/* Optional: keep older blue filled style if you ever use .invite-btn.invited */
+.invite-btn.invited {
+    background: linear-gradient(180deg, #66a8ff 0%, #2b73e6 100%);
+    color: #fff;
+    border-color: rgba(43, 115, 230, 0.9);
+    box-shadow: 0 6px 14px rgba(43, 115, 230, 0.12);
+}
+
+/* Participant modal: same visual style as Add Group */
+#participantModal .modal-content {
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 18px 24px;
+    box-shadow: 0 8px 24px rgba(60, 60, 60, 0.12);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: calc(100vh - 32px);
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+#participantModal h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #183153;
+    margin: 0 0 6px 0;
+}
+
+#participantForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#participantForm label {
+    font-weight: 600;
+    color: #183153;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+/* inputs */
+#participantForm input[type="text"],
+#participantForm input[type="email"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #dbe2ea;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #f7f9fb;
+    transition: border 0.15s, background 0.15s;
+}
+
+#participantForm input:focus {
+    border: 1.5px solid #285B9A;
+    outline: none;
+    background: #fff;
+}
+
+/* actions row and primary button */
+#participantForm .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+#participantForm button.btn-primary {
+    padding: 10px 20px;
+    border-radius: 18px;
+    background: #3973f4;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(60, 60, 60, 0.07);
+    transition: background 0.18s;
+}
+
+#participantForm button.btn-primary:hover {
+    background: #285B9A;
+}
+
+/* close button */
+#participantModal .close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 1.6rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.18s;
+}
+
+#participantModal .close:hover {
+    color: #3973f4;
+}
+
+/* responsive tweaks */
+@media (max-width: 700px) {
+    #participantModal .modal-content {
+        padding: 16px;
+        max-width: 98vw;
+    }
+
+    #participantForm .actions {
+        margin-top: 8px;
+    }
+
+    #participantForm button.btn-primary {
+        padding: 9px 16px;
+    }
+}
+
+/* status button (clickable) */
+.status-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 0.82rem;
+    cursor: pointer;
+    background: transparent;
+}
+
+/* Active / Inactive visual variants */
+.status-btn {
+    background: #fff;
+    color: #0F2B4E;
+    border: 1px solid #eef6ef;
+}
+
+.status-btn.active {
+    background: #e8fff3;
+    color: #028a4b;
+    border: 1px solid #c9f0d9;
+}
+
+.status-btn.inactive {
+    background: #f3f6f8;
+    color: #7a8793;
+    border: 1px solid #e6eef3;
+}
+
+/* UNIFIED state buttons: Invite/Invited + Active/Inactive */
+.state-btn,
+.status-btn,
+.invite-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    font-weight: 400;
+    /* text normal, nu bold */
+    transition: background .12s, color .12s, border-color .12s, box-shadow .12s;
+    border: 1px solid transparent;
+    background: #fff;
+    color: #0F2B4E;
+    box-shadow: none;
+}
+
+/* Active appearance (green) */
+.state-btn.active,
+.status-btn.active,
+.invite-btn.active {
+    background: #e8fff3;
+    color: #028a4b;
+    border-color: #c9f0d9;
+    box-shadow: none;
+}
+
+/* Inactive appearance (gray) */
+.state-btn.inactive,
+.status-btn.inactive,
+.invite-btn.inactive {
+    background: #f3f6f8;
+    color: #7a8793;
+    border-color: #e6eef3;
+    box-shadow: none;
+}
+
+/* Keep the blue "invited" filled variant if you still use it */
+.invite-btn.invited {
+    background: linear-gradient(180deg, #66a8ff 0%, #2b73e6 100%);
+    color: #fff;
+    border-color: rgba(43, 115, 230, 0.9);
+    box-shadow: 0 6px 14px rgba(43, 115, 230, 0.12);
+}
+
+/* hover states */
+.state-btn:hover,
+.status-btn:hover,
+.invite-btn:hover {
+    filter: brightness(0.98);
+}
+
+/* Make the table action cell the positioning context so the menu stays inside the row */
+.actions-td {
+    position: relative;
+    z-index: 40;
+    /* above table content but below modal/navbar */
+}
+
+/* dropdown menu — positioned relative to the cell, aligned to the right, no stray left/bottom syntax */
+.options-menu {
+    position: absolute;
+    right: 8px;
+    /* align to right edge of the cell */
+    bottom: 36px;
+    /* show above the button */
+    top: auto;
+    left: auto;
+    background: #fff;
+    border: none;
+    /* remove outer border */
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+    border-radius: 8px;
+    min-width: 120px;
+    /* enough width for labels */
+    z-index: 100;
+    display: none;
+    padding: 6px;
+}
+
+/* menu buttons: no border, left-aligned, consistent padding */
+.options-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    color: #0F2B4E;
+    cursor: pointer;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    /* <-- remove border around each item */
+}
+
+/* visually separate items on hover */
+.options-menu button:hover {
+    background: #f3f7ff;
+}
+
+/* smaller delete color but still no border */
+.options-menu .edit-option {
+    color: #1f6fd1;
+    font-weight: 600;
+}
+
+.options-menu .delete-option {
+    color: #c92a2a;
+    font-weight: 600;
+}
+
+/* defensive: ensure the options button itself stays above table row content */
+.options-btn {
+    position: relative;
+    z-index: 45;
+}
+
+/* Open button on cards - left bottom, styled like .btn-primary but compact */
+.card .open-btn {
+    position: absolute;
+    left: 12px;
+    bottom: 17px;
+    padding: 8px 16px;
+    border-radius: 18px;
+    font-size: 0.80rem;
+    font-weight: 600;
+    line-height: 1;
+    min-height: 36px;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(43, 111, 230, 0.12);
+    background: linear-gradient(180deg, #4fa3ff 0%, #2b6fe6 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    z-index: 9;
+}
+
+/* hover effect */
+.card .open-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(43, 111, 230, 0.16);
+}
+
+/* ensure open button doesn't overlap card-actions area on small cards */
+.card .card-actions {
+    right: 12px;
+    bottom: 12px;
+}
+
+/* responsive: slightly smaller open button on very small cards */
+@media (max-width: 480px) {
+    .card .open-btn {
+        padding: 7px 12px;
+        left: 10px;
+        bottom: 10px;
+        font-size: 0.9rem;
+    }
+}
