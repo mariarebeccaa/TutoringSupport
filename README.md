@@ -45,11 +45,7 @@ Tutoring-Support/
 ├── css/  
 │ └── main.css # Stylesheet  
 ├── assets/ # Images & logos  
-│ ├── tutoring-logo-white.png  
-│ ├── user.jpg  
-│ ├── logo_mate.jpg  
-│ ├── logo_eng.jpg  
-│ └── logo_fizica.jpg  
+│ 
 
 
 
