@@ -28,18 +28,50 @@
             <!-- Header alb -->
             <div class="navbar">
                 <button id="menu-toggle" class="menu-toggle">&#9776;</button>
-                <div class="user-info">
-                    <span>Edu Maria-Rebecca</span>
-                    <img src="assets/user.jpg" class="avatar">
+                <div class="navbar-content">
+                    <div class="navbar-right">
+                        <div class="user-profile">
+                            <img src="assets/user.jpg" alt="User" class="user-avatar">
+                            <div class="user-info">
+                                <span class="user-name">Edu Maria-Rebecca</span>
+                                <span class="user-role">Tutor</span>
+                            </div>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <!-- Conținut -->
             <div class="content">
 
                 <!-- Secțiunea Home -->
                 <section id="home" class="section active">
                     <h2>Home</h2>
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-info">
+                                <h3>24</h3>
+                                <p>Active Groups</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">👤</div>
+                            <div class="stat-info">
+                                <h3>156</h3>
+                                <p>Participants</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-info">
+                                <h3>8</h3>
+                                <p>Active Sessions</p>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- Secțiunea Groups -->
@@ -118,7 +150,7 @@
                 <label>Grade</label>
                 <input type="text" id="pClass" placeholder="e.g. 9A">
                 <label>Classes (comma separated)</label>
-                <input type="text" id="pSubjects" placeholder="Mate, Fizica">
+                <input type="text" id="pSubjects" placeholder="Math, Physics">
                 <div style="display:flex;justify-content:flex-end;margin-top:8px;">
                     <button type="submit" class="btn-primary" id="participantSubmit">Add</button>
                 </div>

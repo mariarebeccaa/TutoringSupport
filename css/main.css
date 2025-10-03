@@ -94,29 +94,99 @@ body {
 /* Zona principală (dreapta) */
 .main {
     margin-left: 253px;
-    /* împinge contentul la dreapta, cât sidebar-ul */
     display: flex;
     flex-direction: column;
     height: 100vh;
     transition: margin-left 0.3s;
 }
 
-/* Navbar above page content so hamburger is always clicabil */
+/* Navbar (fix) */
 .navbar {
     position: fixed;
     left: 253px;
     right: 0;
     top: 0;
     height: 60px;
-    background: white;
+    background: #fff;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 1.5rem;
-    box-shadow: 0px 2px 2px 0px #00000012;
+    box-shadow: 0 2px 2px #00000012;
     z-index: 9999;
-    /* <-- increased so it's above participants/table */
     transition: left 0.3s;
+    border-bottom: 1px solid #e9edf3;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* în loc de flex-end */
+    height: 100%;
+    padding: 0 2rem;
+    width: 100%;
+    /* ocupă toată lățimea navbar-ului */
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+    /* împinge zona de profil la dreapta */
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.user-profile:hover {
+    background-color: #f8f9fa;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dee2e6;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 2px;
+    margin-left: 0;
+    /* alinierea la dreapta e controlată de .navbar-right/.user-profile */
+}
+
+.user-name {
+    font-weight: 600;
+    color: black;
+    font-size: 0.875rem;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #6c757d;
+    line-height: 1.2;
+}
+
+.dropdown-arrow {
+    font-size: 0.75rem;
+    color: #6c757d;
+    transition: transform 0.3s ease;
+}
+
+.user-profile:hover .dropdown-arrow {
+    transform: rotate(180deg);
 }
 
 /* Mobile: keep sidebar under navbar so hamburger remains clickable */
@@ -134,10 +204,14 @@ body {
         padding: 0;
     }
 
-    /* navbar should stay above sidebar on mobile too */
     .navbar {
         left: 0;
         z-index: 300;
+    }
+
+    .main {
+        padding-top: 60px;
+        box-sizing: border-box;
     }
 
     .sidebar.open {
@@ -477,6 +551,20 @@ body {
     }
 }
 
+/* Always 3 columns on large screens */
+@media (min-width: 901px) {
+    .groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* 2 col sub 900px (deja ai) și 1 col pe mobil mic */
+@media (max-width: 600px) {
+    .groups {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 @media (max-width: 600px) {
     .sidebar {
         position: fixed;
@@ -491,6 +579,16 @@ body {
         padding: 0;
         box-shadow: none;
         outline: none;
+    }
+
+    .navbar {
+        left: 0;
+        z-index: 300;
+    }
+
+    .main {
+        padding-top: 60px;
+        box-sizing: border-box;
     }
 
     .sidebar.open {
@@ -1404,4 +1502,154 @@ body {
         bottom: 10px;
         font-size: 0.9rem;
     }
+}
+
+/* Navbar: profile right + stacked text (name above, role below) */
+.navbar .navbar-content {
+    justify-content: space-between;
+    /* buton meniu stânga, profil dreapta */
+}
+
+.navbar .navbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar .user-profile {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.navbar .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dee2e6;
+}
+
+/* Textul din profil: pe coloană, aliniat la stânga */
+.navbar .user-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start;
+    gap: 0px !important;
+    margin-left: 0;
+    line-height: 1.15;
+}
+
+.navbar .user-name {
+    font-weight: 550;
+    color: #0F2B4E;
+    /* albastru închis */
+    font-size: 0.875rem;
+}
+
+.navbar .user-role {
+    font-weight: 400;
+    color: #6c757d;
+    /* gri */
+    font-size: 0.80rem;
+}
+
+.navbar .dropdown-arrow {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-left: 4px;
+    transition: transform .25s ease;
+}
+
+.navbar .user-profile:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Anulează regulile vechi care forțau layout pe un singur rând */
+.user-info img {
+    margin-left: 0;
+}
+
+/* Home – Stats cards */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0 16px 24px 16px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #ffffff;
+    border: 1px solid #eef2f6;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.06);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #1a4185;
+    background: linear-gradient(135deg, #73aae2, #0F2B4E);
+}
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: #0F2B4E;
+}
+
+.stat-info p {
+    margin: 2px 0 0 0;
+    font-size: 14px;
+    color: #6790b8;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .stats-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-cards {
+        grid-template-columns: 1fr;
+        padding: 0 12px 20px 12px;
+    }
+}
+
+/* Home: micșorează distanța dintre H2 și stats-cards doar pe Home */
+#home>h2 {
+    margin-top: 65px;
+    /* păstrăm poziția față de navbar */
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 65px;
+    /* în loc de 65px din .content h2 */
+}
+
+#home .stats-cards {
+    margin-top: 5;
+    /* să vină lipit sub titlu */
 }
